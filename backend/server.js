@@ -30,13 +30,20 @@ app.use(helmet());
 
 // START OF ROUTES //
 
-app.post("/events", (req, res) => {
+app.post("/events", async (req, res) => {
 	// 1) get data that was sent from front-end
 	// we're sending over eventData as the data for the POST request
 	// and eventData is an object
 	const eventData = req.body.eventData; 
 	// also let {eventData} = req.body;
 	// 2) Model.create(eventData)
+
+	try {
+		let res = await Event.create(eventData);
+		res.status(201).send("created a new event!");
+	}catch(err){
+		console.error(err);
+	}
 })
 
 // END OF ROUTES // 

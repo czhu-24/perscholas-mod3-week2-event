@@ -47,7 +47,6 @@ const EventForm = () => {
 			});
 			if (response.status >= 200 && response.status < 300) {
 				console.log('Event registered successfully:', response.data);
-
 			} else {
 				console.error('Error registering event:', response.data);
 			}

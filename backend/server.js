@@ -5,6 +5,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 // adds standard security to server
 const helmet = require('helmet');
+const Event = require('./models/Event.js');
 require('dotenv').config();
 
 const PORT = 3000;

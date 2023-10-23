@@ -1,19 +1,7 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import './index.css';
+import axios from "axios";
+import { useEffect } from "react";
 
-const EventList = () => {
-
-	// compnent lifecycle
-	// 1. mounts (state runs, code runs, JSX gets put on screen)
-	// 2. useEffects run
-	// 3. setState
-	// 4. rerender (recalculate state, code runs, NEW JSX)
-	// 5. dismounts ?
-
-
-
-	const [events, setEvents] = useState([]);
+const EventList = ({ events, setEvents }) => {
 
 
 	useEffect(() => {
@@ -27,28 +15,47 @@ const EventList = () => {
 		};
 		fetchEvents();
 	}, []);
-	// ^ we can specify what chagnes should cause the funciton to run again
 
-	console.log("I'm on first render, before useEffect")
+	const handleDelete = async (eventId) => {
+		// 1) go to MongoDB and delete from DB
+		let response = await axios({
+			method: "DELETE",
+			// url will  be "localhost:3000/events/eventId"
+			// ONLY USE COLONS (/events/:eventID) WHEN DEFINING PATHS FOR ROUTES
+			url: `/server/events/${eventId}`
+		});
+		// 2) deleted event is still inside the events state variable! it's still visible in the UI!
 
+		if (response.status === 200) {
+			// setting events state var to filtered version of current events where the event's id is NOT eventId (keep every event whose id doesn't match that of clicked on event's id)
 
+			// 3) so, set state without this event
+			setEvents(events.filter(event => event._id !== eventId));
+		}
+
+	}
 
 	return (
 		<div className="event-list">
 			<h1>My List Of Events</h1>
-			{events.map(event => (
-				<div key={event.id} className="event-item">
-					<h2>{event.title}</h2>
-					<p>Date: {event.date}</p>
-					<p>Location: {event.location}</p>
-					<p>Description: {event.description}</p>
-					<div className="organizer">
-						<strong>Organizer:</strong>
-						<p>Name: {event.organizer.name}</p>
-						<p>Role: {event.organizer.role}</p>
+			{events.length > 0 ? (
+				events.map((event) => (
+					<div key={event._id} className="event-item">
+						<button onClick={() => handleDelete(event._id)}>Delete</button>
+						<h2>{event.title}</h2>
+						<p>Date: {event.date}</p>
+						<p>Location: {event.location}</p>
+						<p>Description: {event.description}</p>
+						<div className="organizer">
+							<strong>Organizer:</strong>
+							<p>Name: {event.organizer.name}</p>
+							<p>Role: {event.organizer.role}</p>
+						</div>
 					</div>
-				</div>
-			))}
+				))
+			) : (
+				<p>No events yet</p>
+			)}
 		</div>
 	);
 };

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 
-const EventForm = () => {
+const EventForm = ({ setEvents }) => {
 
 	const [eventData, setEventData] = useState({
 		title: '',
@@ -37,16 +37,19 @@ const EventForm = () => {
 	};
 
 	const handleSubmit = async (e) => {
+		console.log("doing submit");
 		e.preventDefault();
 
 		try {
 			const response = await axios({
-				url: '/server/events',
 				method: "POST",
+				url: '/server/events',
 				data: eventData
 			});
+			console.log(response);
 			if (response.status >= 200 && response.status < 300) {
 				console.log('Event registered successfully:', response.data);
+				// add response.data to the events state var, but that's in the EventList component
 			} else {
 				console.error('Error registering event:', response.data);
 			}

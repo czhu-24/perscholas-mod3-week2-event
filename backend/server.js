@@ -30,8 +30,10 @@ app.use(helmet());
 
 // START OF ROUTES //
 
-app.get('/events', (req, res) => {
-	res.send("EVENTS GET RESPONSE FOR NOW, WILL FIX")
+app.get('/events', async (req, res) => {
+	// you can put an object like {title: "First title"} inside the .find() to specify the search
+	let arrayOfEvents = await Event.find(); 
+	res.send(arrayOfEvents);
 })
 
 app.post("/events", async (req, res) => {
@@ -41,11 +43,20 @@ app.post("/events", async (req, res) => {
 	// 2) Model.create(eventData)
 
 	try {
-		let res = await Event.create(eventData);
-		res.status(201).send("created a new event!");
+		// DO NOT also name this res
+		let response = await Event.create(eventData);
+		res.status(201).send(response);
 	}catch(err){
 		console.error(err);
 	}
+})
+
+app.delete("/events/:eventId", async(req, res) => {
+	// .findByIdAndDelete() mongoose method, there are others
+	const eventId = req.params.eventId; 
+	let response = await Event.findByIdAndDelete(eventId);
+	console.log(response);
+	res.send("deleted event!");
 })
 
 // END OF ROUTES // 

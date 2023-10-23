@@ -59,6 +59,15 @@ app.delete("/events/:eventId", async(req, res) => {
 	res.send("deleted event!");
 })
 
+app.put("/events/:eventId", async(req, res) => {
+	const eventId = req.params.eventId;
+	const updatedData = req.body;
+	// q: is req.body ALWAYS a string? can you do the opposite of JSON.stringify on it if it's always a string
+	// the last argument tells mongoose to return the new... updated... object?
+	let response = await Event.findByIdAndUpdate(eventId, updatedData, {new: true});
+	res.send("updated event!");
+})
+
 // END OF ROUTES // 
 
 app.listen(PORT, () => {

@@ -49,7 +49,8 @@ const EventForm = ({ setEvents }) => {
 			console.log(response);
 			if (response.status >= 200 && response.status < 300) {
 				console.log('Event registered successfully:', response.data);
-				// add response.data to the events state var, but that's in the EventList component
+				// add response.data to the events state var, but that's in the EventList component, so we lift events state var from <EventList> to <App> and pass setEvents from <App> to <EventForm> as a prop
+				setEvents((prevEvents) => [...prevEvents, response.data]);
 			} else {
 				console.error('Error registering event:', response.data);
 			}

@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useEffect } from "react";
+import Event from '../Event'
 
 const EventList = ({ events, setEvents }) => {
-
 
 	useEffect(() => {
 		const fetchEvents = async () => {
@@ -38,24 +38,9 @@ const EventList = ({ events, setEvents }) => {
 	return (
 		<div className="event-list">
 			<h1>My List Of Events</h1>
-			{events.length > 0 ? (
-				events.map((event) => (
-					<div key={event._id} className="event-item">
-						<button onClick={() => handleDelete(event._id)}>Delete</button>
-						<h2>{event.title}</h2>
-						<p>Date: {event.date}</p>
-						<p>Location: {event.location}</p>
-						<p>Description: {event.description}</p>
-						<div className="organizer">
-							<strong>Organizer:</strong>
-							<p>Name: {event.organizer.name}</p>
-							<p>Role: {event.organizer.role}</p>
-						</div>
-					</div>
-				))
-			) : (
-				<p>No events yet</p>
-			)}
+			{events.map(event => (
+				<Event key={event._id} event={event} handleDelete={handleDelete} setEvents={setEvents} />
+			))}
 		</div>
 	);
 };

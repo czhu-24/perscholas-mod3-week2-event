@@ -1,16 +1,22 @@
-import { useState } from 'react';
 import './App.css'
-import EventForm from './components/EventForm'
-import EventList from './components/EventList'
+import { Link, Route, Routes } from 'react-router-dom';
+import Events from './pages/Events';
+import Employees from './pages/Employees';
 
 function App() {
 
-  const [events, setEvents] = useState([]);
-
   return (
     <>
-      <EventForm setEvents={setEvents} />
-      <EventList events={events} setEvents={setEvents} />
+      {/* nav bar with links */}
+      <nav>
+        <Link to="/">Events</Link>
+        <Link to="/employees">Employees</Link>
+      </nav>
+      {/* routes here */}
+      <Routes>
+        <Route path="/" element={<Events />} />
+        <Route path="/employees" element={<Employees />} />
+      </Routes>
     </>
   )
 }

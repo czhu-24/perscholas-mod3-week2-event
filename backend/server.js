@@ -5,6 +5,7 @@ const express = require('express')
 const cors = require('cors');
 const morgan = require('morgan');
 // adds standard security to server
+
 const helmet = require('helmet');
 const Event = require('./models/Event.js');
 require('dotenv').config();
@@ -83,7 +84,7 @@ app.put("/events/:eventId", async(req, res) => {
 })
 
 app.get('/*', (req, res) => {
-	res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+	res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
 });
 
 // END OF ROUTES // 

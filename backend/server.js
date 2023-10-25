@@ -30,6 +30,10 @@ app.use(helmet());
 
 // START OF ROUTES //
 
+app.get('/', (req, res) => {
+	res.send("HOME PAGE HERE");
+})
+
 app.get('/events', async (req, res) => {
 	// you can put an object like {title: "First title"} inside the .find() to specify the search
 	let arrayOfEvents = await Event.find(); 

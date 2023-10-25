@@ -7,7 +7,10 @@ const EventList = ({ events, setEvents }) => {
 	useEffect(() => {
 		const fetchEvents = async () => {
 			try {
-				const response = await axios('/server/events');
+				const response = await axios({
+					method: "GET",
+					url: '/server/events'
+				});
 				setEvents(response.data);
 			} catch (error) {
 				console.error('Error fetching events:', error);

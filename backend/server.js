@@ -16,7 +16,7 @@ const path = require("path");
 const PORT = 3000;
 
 // serve static files from dist folder
-const distPath = path.join(__dirname, 'dist');
+const distPath = path.join(__dirname, '../client/dist');
 
 const app = express();
 
@@ -82,10 +82,6 @@ app.put("/events/:eventId", async(req, res) => {
 	let response = await Event.findByIdAndUpdate(eventId, updatedData, {new: true});
 	res.send("updated event!");
 })
-
-app.get('/*', (req, res) => {
-	res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
-});
 
 // END OF ROUTES // 
 

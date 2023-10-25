@@ -13,6 +13,12 @@ const path = require("path");
 
 const PORT = 3000;
 
+// serve static files from dist folder
+const distPath = path.join(__dirname, 'dist');
+
+// Serve static files from the 'dist' folder
+app.use(express.static(distPath));
+
 
 
 // bring mongodb file into this server file
@@ -36,7 +42,7 @@ app.use(helmet());
 // START OF ROUTES //
 
 app.get('/', (req, res) => {
-	res.send("HOME PAGE HERE");
+	res.sendFile(path.join(distPath, 'index.html'));
 })
 
 app.get('/events', async (req, res) => {

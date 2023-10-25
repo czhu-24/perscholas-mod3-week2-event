@@ -1,6 +1,7 @@
 // REMEMBER: we install cors, morgan, and express for the BACKEND
 
 const express = require('express')
+
 const cors = require('cors');
 const morgan = require('morgan');
 // adds standard security to server
@@ -16,6 +17,8 @@ const PORT = 3000;
 // serve static files from dist folder
 const distPath = path.join(__dirname, 'dist');
 
+const app = express();
+
 // Serve static files from the 'dist' folder
 app.use(express.static(distPath));
 
@@ -24,7 +27,7 @@ app.use(express.static(distPath));
 // bring mongodb file into this server file
 require('./config/db.js');
 
-const app = express();
+
 
 // START OF MIDDLEWARE //
 // can now use req.body

@@ -8,7 +8,12 @@ const helmet = require('helmet');
 const Event = require('./models/Event.js');
 require('dotenv').config();
 
+// EDIT BELOW
+const path = require("path");
+
 const PORT = 3000;
+
+
 
 // bring mongodb file into this server file
 require('./config/db.js');

@@ -1,5 +1,3 @@
-// REMEMBER: we install cors, morgan, and express for the BACKEND
-
 const express = require('express')
 
 const cors = require('cors');
@@ -9,8 +7,6 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 const Event = require('./models/Event.js');
 require('dotenv').config();
-
-// EDIT BELOW
 const path = require("path");
 
 const PORT = 3000;
@@ -41,6 +37,15 @@ app.use(cors({
 app.use(morgan('dev'));
 
 app.use(helmet());
+
+// Strip /server from URL
+app.use((req, res, next) => {
+    if (req.path.startsWith('/server')) {
+        req.url = req.url.replace('/server', ''); // Strip /server from the path
+    }
+    next();
+});
+
 // END OF MIDDLEWARE //
 
 // START OF ROUTES //
@@ -59,7 +64,7 @@ app.post("/events", async (req, res) => {
 
 	try {
 		// DO NOT also name this res
-		let response = await Event.create(eventData);
+		const response = await Event.create(eventData);
 		res.status(201).send(response);
 	}catch(err){
 		console.error(err);
@@ -69,7 +74,7 @@ app.post("/events", async (req, res) => {
 app.delete("/events/:eventId", async(req, res) => {
 	// .findByIdAndDelete() mongoose method, there are others
 	const eventId = req.params.eventId; 
-	let response = await Event.findByIdAndDelete(eventId);
+	const response = await Event.findByIdAndDelete(eventId);
 	console.log(response);
 	res.send("deleted event!");
 })
@@ -79,9 +84,11 @@ app.put("/events/:eventId", async(req, res) => {
 	const updatedData = req.body;
 	// q: is req.body ALWAYS a string? can you do the opposite of JSON.stringify on it if it's always a string
 	// the last argument tells mongoose to return the new... updated... object?
-	let response = await Event.findByIdAndUpdate(eventId, updatedData, {new: true});
+	const response = await Event.findByIdAndUpdate(eventId, updatedData, {new: true});
 	res.send("updated event!");
 })
+
+  
 
 // END OF ROUTES // 
 

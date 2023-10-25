@@ -19,11 +19,6 @@ const AddEmployee = () => {
 		// axios call to do a PUT request
 		// to make a new employee
 		// TODO: START HERE!!! 
-		const response = await axios({
-			method: "POST",
-			url: "/employee",
-
-		})
 	}
 
 

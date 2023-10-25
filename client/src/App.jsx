@@ -6,14 +6,16 @@ import ViewEmployees from './pages/ViewEmployees';
 import AddEmployee from './pages/AddEmployee';
 
 function App() {
-  // conditionally hide the top level navbar with Events & Employees
-  const location = useLocation();
+  // // conditionally hide the top level navbar with Events & Employees
+  // const location = useLocation();
 
-  // array of routes where the navbar is hidden
-  const routesToHideNavbar = ['/employees', '/employees/view', '/employees/add'];
+  // // array of routes where the navbar is hidden
+  // const routesToHideNavbar = ['/employees', '/employees/view', '/employees/add'];
 
-  // check if current path is in routesToHideNavbar array
-  const hideNavbar = routesToHideNavbar.includes(location.pathname);
+  // // check if current path is in routesToHideNavbar array
+  // const hideNavbar = routesToHideNavbar.includes(location.pathname);
+
+  const hideNavbar = false;
 
   return (
     <>

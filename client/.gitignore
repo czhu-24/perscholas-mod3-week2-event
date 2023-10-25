@@ -8,7 +8,8 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
-client/dist
+# IGNORE DIST FOLDER
+dist
 dist-ssr
 *.local
 

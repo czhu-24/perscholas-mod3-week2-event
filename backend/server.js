@@ -41,10 +41,6 @@ app.use(helmet());
 
 // START OF ROUTES //
 
-app.get('/', (req, res) => {
-	res.sendFile(path.join(distPath, 'index.html'));
-})
-
 app.get('/events', async (req, res) => {
 	// you can put an object like {title: "First title"} inside the .find() to specify the search
 	let arrayOfEvents = await Event.find(); 
@@ -82,6 +78,10 @@ app.put("/events/:eventId", async(req, res) => {
 	let response = await Event.findByIdAndUpdate(eventId, updatedData, {new: true});
 	res.send("updated event!");
 })
+
+app.get('/*', (req, res) => {
+	res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
 
 // END OF ROUTES // 
 
